@@ -1,0 +1,78 @@
+<html layout:decorate="~{layout}">
+<div layout:fragment="content" class="p-4 container">
+  <div class="card my-2">
+    <div class="card-body">
+      <div class="card-text my-4">
+        <p>
+          <span style="font-size:200%"  th:text="${user.username}"></span>
+          <span>님의 프로필</span>
+        </p>
+      </div>
+      <div class="border-bottom"></div>
+      <div class="card-text">
+          <table class="table">
+            <thead>
+            <tr class="text-center">
+              <th>작성한 질문수</th>
+              <th>작성한 답변수</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr class="text-center">
+              <td th:text="${user.questionnum}"></td>
+              <td th:text="${user.answernum}"></td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+  </div>
+  <h3 class="border-bottom my-2 py-2">최근작성질문 </h3>
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead class="table-dark">
+        <tr class="text-center">
+          <th>번호</th>
+          <th>카테고리</th>
+          <th style="width: 50%">제목</th>
+          <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center" th:each="question,loop :${questionList}">
+          <td th:text="${loop.count}"></td>
+          <td th:text="${question.category}"></td>
+          <td class="text-center">
+            <a th:text="${question.subject}" th:href="@{|/question/detail/${question.id}|}"></a>
+          </td>
+          <td th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <h3 class="border-bottom my-2 py-2">최근작성답변 </h3>
+  <div class="card">
+    <div class="card-body">
+      <table class="table">
+        <thead class="table-dark">
+        <tr class="text-center">
+          <th>번호</th>
+          <th>내용</th>
+          <th>작성일시</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="text-center" th:each="answer, loop : ${answerList}">
+          <td th:text="${loop.count}"></td>
+          <td class="text-center">
+            <a th:text="${answer.content}" th:href="@{|/question/detail/${answer.question.id}|}"></a>
+          </td>
+          <td th:text="${#temporals.format(answer.createDate,'yyyy-MM-dd HH:mm')}"></td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
+</html>
